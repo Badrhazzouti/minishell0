@@ -6,7 +6,7 @@
 /*   By: bhazzout <bhazzout@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 15:36:26 by bhazzout          #+#    #+#             */
-/*   Updated: 2023/04/26 09:39:56 by bhazzout         ###   ########.fr       */
+/*   Updated: 2023/04/26 16:58:50 by bhazzout         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,23 +82,23 @@ char	*fill_line(char *input, int len)//get the line with one space separate it's
 	return (line);
 }
 
-int	check_d_quote(char *input)
-{
-	int	i;
-	int	d_quoted;
+// int	check_d_quote(char *input)
+// {
+// 	int	i;
+// 	int	d_quoted;
 
-	d_quoted = 0;
-	i = 0;
-	while (input[i])
-	{
-		if (input[i] == '"')
-			d_quoted++;
-		i++;
-	}
-	if (d_quoted % 2)
-		return (1);
-	return (0);
-}
+// 	d_quoted = 0;
+// 	i = 0;
+// 	while (input[i])
+// 	{
+// 		if (input[i] == '"')
+// 			d_quoted++;
+// 		i++;
+// 	}
+// 	if (d_quoted % 2)
+// 		return (1);
+// 	return (0);
+// }
 
 int	check_outside(int count)
 {
@@ -107,7 +107,7 @@ int	check_outside(int count)
 	return (0);
 }
 
-int	check_s_quote(char *input)
+int	check_quotes(char *input)
 {
 	int	i;
 	int	d_count;
@@ -119,7 +119,10 @@ int	check_s_quote(char *input)
 	while (input[i])
 	{
 		if (input[i] == '"')
-			d_count++;
+		{
+			if (check_outside(s_count) == 1)
+				d_count++;
+		}
 		if (input[i] == '\'')
 		{
 			if (check_outside(d_count) == 1)
@@ -132,27 +135,14 @@ int	check_s_quote(char *input)
 		printf("there is unclosed single quote.\n");
 		return (1);
 	}
+	if (d_count % 2 != 0)
+	{
+		printf("there is unclosed double quote.\n");
+		return (1);
+	}
 	return (0);
 }
 
-int	check_quotes(char *input)
-{
-	if (check_d_quote(input) == 1)
-	{
-		printf("Unclosed quotes.\n");
-		return (1);
-	}
-	else
-	{
-		if (check_s_quote(input) == 1)
-		{
-			printf("unclosed single quote.\n");
-			return (1);
-		}
-	}
-	
-	return (0);
-}
 
 int check_pipe(char *input)
 {
