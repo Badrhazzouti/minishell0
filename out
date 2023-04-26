@@ -1,0 +1,11 @@
+Makefile
+build
+env_processor.c
+helper_1.c
+helper_2.c
+helper_3_linked_list.c
+line_processor.c
+minishell
+minishell.c
+minishell.h
+out
