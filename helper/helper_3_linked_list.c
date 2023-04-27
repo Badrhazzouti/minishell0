@@ -6,11 +6,11 @@
 /*   By: bhazzout <bhazzout@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 01:38:21 by bhazzout          #+#    #+#             */
-/*   Updated: 2023/04/13 20:31:00 by bhazzout         ###   ########.fr       */
+/*   Updated: 2023/04/27 10:27:29 by bhazzout         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 t_env	*ft_lstnew(char *name, char *value, t_env *new)
 {

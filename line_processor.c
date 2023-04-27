@@ -6,7 +6,7 @@
 /*   By: bhazzout <bhazzout@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 00:27:03 by bhazzout          #+#    #+#             */
-/*   Updated: 2023/04/17 22:19:07 by bhazzout         ###   ########.fr       */
+/*   Updated: 2023/04/27 09:35:11 by bhazzout         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,21 @@ char	*add_spaces(char *input)
 		flag = 1;
 	}
 	str[j] = '\0';
-	printf("this is my line: %s\n", str);
+	// printf("this is my line: %s\n", str);
 	return (str);
+}
+
+char	*skip_spaces(char *input)
+{
+	int	i;
+
+	i = 0;
+	while (input[i] == ' ' || input[i] == '\t')
+		input++;
+	while (input[i])
+		i++;
+	while (input[i - 1] == ' ' || input[i - 1] == '\t')
+		i--;
+	input[i] = '\0';
+	return (input);
 }

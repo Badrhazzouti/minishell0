@@ -6,11 +6,11 @@
 /*   By: bhazzout <bhazzout@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 01:09:29 by bhazzout          #+#    #+#             */
-/*   Updated: 2023/04/21 01:31:15 by bhazzout         ###   ########.fr       */
+/*   Updated: 2023/04/27 10:27:38 by bhazzout         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void	*ft_memcpy(void *dest, const void *src, size_t n)
 {

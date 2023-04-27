@@ -6,7 +6,7 @@
 /*   By: bhazzout <bhazzout@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 15:36:24 by bhazzout          #+#    #+#             */
-/*   Updated: 2023/04/21 01:01:13 by bhazzout         ###   ########.fr       */
+/*   Updated: 2023/04/27 09:37:41 by bhazzout         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,12 @@ void	*freeini(char **string, int len);
 char	**ft_split(const char *s, char sep);
 int		ft_strncmp(const char *s1, const char *s2, int n);
 int		ft_strcmp(char *s1, char *s2);
+int 	check_pipe(char *input);
+int		check_redirec_op(char *input);
+int 	check_line(char *input);
+char	*skip_spaces(char *input);
+int		check_quotes(char *input);
+int		check_outside(int count);
+
 
 #endif
