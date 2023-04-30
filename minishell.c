@@ -6,7 +6,7 @@
 /*   By: bhazzout <bhazzout@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 15:36:26 by bhazzout          #+#    #+#             */
-/*   Updated: 2023/04/27 10:19:43 by bhazzout         ###   ########.fr       */
+/*   Updated: 2023/04/29 17:22:09 by bhazzout         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ int	get_length(char *input)
 
 	i = 0;
 	len = 0;
-	while (input[i] == ' '|| input[i] == '\t')
+	while (input[i] && (input[i] == ' '|| input[i] == '\t'))
 		i++;
 	while (input[i])
 	{
 		if (input[i] == ' ' || input[i] == '\t')
 		{
-			while (input[i] == ' ' || input[i] == '\t')
+			while (input[i] && (input[i] == ' ' || input[i] == '\t'))
 				i++;
 			i--;
 		}
@@ -42,7 +42,7 @@ int	get_length(char *input)
 }
 
 
-char	*fill_line(char *input, int len)//get the line with one space separate it's words
+char	*fill_line(char *input, int len)//get the line each of it's word separated by one space
 {
 	int		i;
 	int		j;
@@ -65,6 +65,7 @@ char	*fill_line(char *input, int len)//get the line with one space separate it's
 		i++;
 	}
 	line[j] = '\0';
+	// printf("this is the line-->%s\n", line);
 	return (line);
 }
 
@@ -75,7 +76,19 @@ void	array_printer(int *input)
 	i = 0;
 	while (input[i])
 	{
-		printf("elmnt--->%d\n", input[i]);
+		printf("%d\n", input[i]);
+		i++;
+	}
+}
+
+void	split_print(char **input)
+{
+	int i;
+
+	i = 0;
+	while (input[i])
+	{
+		printf("%s\n", input[i]);
 		i++;
 	}
 }
@@ -120,6 +133,8 @@ int	*array_tokens(char **cmd_array, int elements)
 			cmd_token[i] = R_APP_FILE;
 		else if ((i > 0) && (ft_strcmp(cmd_array[i - 1], ">") == 0))
 			cmd_token[i] = R_OUT_FILE;
+		else if ((i > 0) && (ft_strcmp(cmd_array[i - 1], "<") == 0))
+			cmd_token[i] = R_IN_FILE;
 		else
 			cmd_token[i] = CMD_NAME;
 		if ((i > 0) && (cmd_token[i - 1] == CMD_NAME) && 
@@ -143,11 +158,15 @@ void	get_input(char *input)
 	check_line(input);
 	input = fill_line(input, len);
 	input = add_spaces(input);
+	// printf("%s\n", input);
 	cmd_array = ft_split(input, ' ');
+	// split_print(cmd_array);
 	arr = array_tokens(cmd_array, num_elemnts(cmd_array));
+	op_order(arr);
 	// array_printer(arr);
-	add_history(input);
-	free (input);
+	
+	// add_history(input);
+	// free (input);
 }
 
 int main (int ac, char **av, char **env)

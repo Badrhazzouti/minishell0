@@ -6,7 +6,7 @@
 /*   By: bhazzout <bhazzout@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 15:36:24 by bhazzout          #+#    #+#             */
-/*   Updated: 2023/04/27 09:37:41 by bhazzout         ###   ########.fr       */
+/*   Updated: 2023/04/27 15:17:47 by bhazzout         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ int 	check_line(char *input);
 char	*skip_spaces(char *input);
 int		check_quotes(char *input);
 int		check_outside(int count);
+void	op_order(int *token);
 
 
 #endif
