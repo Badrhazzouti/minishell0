@@ -6,7 +6,7 @@
 /*   By: bhazzout <bhazzout@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 15:36:26 by bhazzout          #+#    #+#             */
-/*   Updated: 2023/04/29 17:22:09 by bhazzout         ###   ########.fr       */
+/*   Updated: 2023/05/03 14:29:58 by bhazzout         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	get_length(char *input)
 {
 	int	i;
 	int	len;
+	int	flag = 0;
 
 	i = 0;
 	len = 0;
@@ -23,7 +24,10 @@ int	get_length(char *input)
 		i++;
 	while (input[i])
 	{
-		if (input[i] == ' ' || input[i] == '\t')
+		// skip_quotes(input, i)
+		if (input[i] == '"' || input[i] =='\'')
+			flag = is_outside(flag, input[i]);
+		if ((input[i] == ' ' || input[i] == '\t') && flag == 0)
 		{
 			while (input[i] && (input[i] == ' ' || input[i] == '\t'))
 				i++;
@@ -47,6 +51,7 @@ char	*fill_line(char *input, int len)//get the line each of it's word separated 
 	int		i;
 	int		j;
 	char	*line;
+	int		flag = 0;
 
 	i = 0;
 	j = 0;
@@ -54,7 +59,9 @@ char	*fill_line(char *input, int len)//get the line each of it's word separated 
 	input = skip_spaces(input);
 	while (input[i])
 	{
-		if (input[i] == ' ' || input[i] == '\t')
+		if (input[i] == '"' || input[i] =='\'')
+			flag = is_outside(flag, input[i]);
+		if ((input[i] == ' ' || input[i] == '\t') && flag == 0)
 		{
 			while (input[i] == ' ' || input[i] == '\t')
 				i++;
@@ -150,19 +157,24 @@ int	*array_tokens(char **cmd_array, int elements)
 void	get_input(char *input)
 {
 	int	len;
-	char	**cmd_array;
-	int	*arr;
+	// char	**cmd_array;
+	// int	*arr;
 
 	input = readline("Minishell: ");
+	if (ft_strcmp(input, "") == 0)
+		return ;
 	len = get_length(input);
-	check_line(input);
-	input = fill_line(input, len);
-	input = add_spaces(input);
-	// printf("%s\n", input);
-	cmd_array = ft_split(input, ' ');
-	// split_print(cmd_array);
-	arr = array_tokens(cmd_array, num_elemnts(cmd_array));
-	op_order(arr);
+	printf("len is : %d\n", len);
+	// check_line(input);
+	// input = fill_line(input, len);
+	// // printf("this is the line : %s\n", input);
+	// input = add_spaces(input);
+	// // printf("(%s)\n", input);
+	// cmd_array = ft_split(input, ' ');
+	// // split_print(cmd_array);
+	// arr = array_tokens(cmd_array, num_elemnts(cmd_array));
+	// op_order(arr);
+	// quote_delete(cmd_array);
 	// array_printer(arr);
 	
 	// add_history(input);

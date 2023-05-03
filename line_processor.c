@@ -6,7 +6,7 @@
 /*   By: bhazzout <bhazzout@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 00:27:03 by bhazzout          #+#    #+#             */
-/*   Updated: 2023/04/30 09:52:34 by bhazzout         ###   ########.fr       */
+/*   Updated: 2023/05/01 16:16:44 by bhazzout         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	space_before(char *input, int i)
 {
-	// if (i == 0)
-	// 	return (1);
+	if (i == 0)
+		return (1);
 	if ((i > 0) && (input[i - 1] == ' '))
 		return (1);
 	return (0);
@@ -61,38 +61,6 @@ int	full_length(char *input)
 	return (count);
 }
 
-// char	*add_space_before(char *input, int *i, int index, int flag)
-// {
-// 	char	*str;
-// 	char	*str1;
-// 	char	*str3;
-// 	char	*full_str;
-// 	(void) index;
-
-// 	if (flag == 0)
-// 	{
-// 		str = ft_substr(input, 0, *i);
-// 		str1 = ft_substr(input, *i,1000);
-// 	}
-// 	else
-// 	{
-// 		str = ft_substr(input, 0, *i + 1);
-// 		str1 = ft_substr(input, *i + 1, 1000);
-// 	}
-// 	printf("first substr: (%s) i : %d\n", str, *i);
-// 	str3 = ft_strjoin(str, " ");
-// 	i++;
-// 	printf("after join : (%s)\n", str3);
-// 	printf("after 2nd str : (%s)\n", str1);
-// 	// free(input);
-// 	full_str = ft_strjoin(str3, str1);
-// 	free(str);
-// 	free(str1);
-// 	free(str3);
-// 	printf("%s----------------\n", full_str);
-// 	return (full_str);
-// }
-
 void	*add_space_before(char *input, int i)
 {
 	char	*str;
@@ -131,16 +99,19 @@ void	*add_space_after(char *input, int i)
 char	*add_spaces(char *input)
 {
 	int 	i;
+	int	flag = 0;
 
 	i = 0;
 	while (input[i])
 	{
-		if (input[i] == '|' || input[i] == '>' || input[i] == '<')
+		if (input[i] == '\'' || input[i] == '"')
+		{
+			flag = is_outside(flag, input[i]);
+		}
+		if ((input[i] == '|' || input[i] == '>' || input[i] == '<') && flag == 0)
 		{
 			if (space_before(input, i) == 0)
-			{
 				input = add_space_before(input, i);
-			}
 			if ((input[i] == '>' && input[i + 1] == '>') || (input[i] == '<' && input[i + 1] == '<'))
 				i++;
 		}
@@ -150,14 +121,16 @@ char	*add_spaces(char *input)
 	i = 0;
 	while (input[i])
 	{
-		if (input[i] == '|' || input[i] == '<' || input[i] == '>')
+		if (input[i] == '\'' || input[i] == '"')
+		{
+			flag = is_outside(flag, input[i]);
+		}
+		if ((input[i] == '|' || input[i] == '<' || input[i] == '>') && flag == 0)
 		{
 			if ((input[i] == '>' && input[i + 1] == '>') || (input[i] == '<' && input[i + 1] == '<'))
 				i++;
 			if (space_after(input, i) == 0)
-			{
 				input = add_space_after(input, i);
-			}
 		}
 		i++;
 	}

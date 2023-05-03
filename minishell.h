@@ -6,7 +6,7 @@
 /*   By: bhazzout <bhazzout@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 15:36:24 by bhazzout          #+#    #+#             */
-/*   Updated: 2023/04/27 15:17:47 by bhazzout         ###   ########.fr       */
+/*   Updated: 2023/05/02 13:39:13 by bhazzout         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,11 @@ void	ft_lstadd_back(t_env **lst, t_env *new);
 char	*add_spaces(char *input);
 char	*ft_substr(char const *s, int start, int len);
 char	*ft_strjoin(const char *s1, const char *s2);
-int		calc_words(const char *s, char c);
-int		ft_wordlen(const char *s, int i, char c);
-char	*ft_charge(const char *s, int i, char c);
+int		calc_words(char *s, char c);
+int		ft_wordlen(char *s, int i, char c);
+char	*ft_charge(char *s, int i, char c, int flag);
 void	*freeini(char **string, int len);
-char	**ft_split(const char *s, char sep);
+char	**ft_split(char *s, char sep);
 int		ft_strncmp(const char *s1, const char *s2, int n);
 int		ft_strcmp(char *s1, char *s2);
 int 	check_pipe(char *input);
@@ -68,6 +68,7 @@ char	*skip_spaces(char *input);
 int		check_quotes(char *input);
 int		check_outside(int count);
 void	op_order(int *token);
-
+int		is_outside(int flag, char c);
+char	**quote_delete(char **cmd);
 
 #endif

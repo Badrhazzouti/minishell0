@@ -6,47 +6,81 @@
 /*   By: bhazzout <bhazzout@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 22:23:04 by bhazzout          #+#    #+#             */
-/*   Updated: 2023/04/17 22:23:23 by bhazzout         ###   ########.fr       */
+/*   Updated: 2023/05/01 19:11:31 by bhazzout         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	calc_words(const char *s, char c)
+int	is_outside(int flag, char c)
 {
-	int		i;
-	int		word;
+	if (c == '\'')
+	{
+		if (flag == 0)
+			flag = 1;
+		else if (flag == 1)
+			flag = 0;
+	}
+	else if (c == '"')
+	{
+		if (flag == 2)
+			flag = 0;
+		else if (flag == 0)
+			flag = 2;
+	}
+	return (flag);
+}
+
+int	calc_words(char *s, char sep)
+{
+	int	i;
+	int	flag;
+	int	word;
 
 	i = 0;
+	flag = 0;
 	word = 0;
-	while (s[i] == c && s[i])
-	i++;
 	while (s[i])
 	{
-		while (s[i] == c)
-			i++;
-		if (s[i])
+		if (s[i] == '\'' || s[i] == '"')
+			flag = is_outside(flag, s[i]);
+		if (s[i] == sep && flag == 0)
+		{
+			if (s[i] && s[i] == sep)
+			{
+				word++;
+				// i++;
+			}
+		}
+		if (!s[i + 1])
 			word++;
-		while (s[i] != c && s[i])
-			i++;
+		i++;
 	}
 	return (word);
 }
 
-int	ft_wordlen(const char *s, int i, char c)
+int	ft_wordlen(char *s, int i, char c)
 {
 	int	len;
+	int	flag;
 
 	len = 0;
-	while (s[i] && s[i] != c)
+	flag = 0;
+	while (s[i])
 	{
+		if (s[i] == '\'' || s[i] == '"')
+		{
+			flag = is_outside(flag, s[i]);
+		}
+		if (s[i] == c && flag == 0)
+			break;
 		i++;
 		len++;
 	}
 	return (len);
 }
 
-char	*ft_charge(const char *s, int i, char c)
+char	*ft_charge(char *s, int i, char c, int flag)
 {
 	char	*str;
 	int		len;
@@ -57,8 +91,14 @@ char	*ft_charge(const char *s, int i, char c)
 	if (!str)
 		return (NULL);
 	j = 0;
-	while (s[i] && s[i] != c)
+	while (s[i])
 	{
+		if (s[i] == '\'' || s[i] == '"')
+		{
+			flag = is_outside(flag, s[i]);
+		}
+		if (s[i] == c && flag == 0)
+			break ;
 		str[j] = s[i];
 		i++;
 		j++;
@@ -67,45 +107,47 @@ char	*ft_charge(const char *s, int i, char c)
 	return (str);
 }
 
-void	*freeini(char **string, int len)
-{
-	int	i;
+// void	*freeini(char **string, int len)
+// {
+// 	int	i;
 
-	i = 0;
-	while (i < len)
-	{
-		free(string[i]);
-		i++;
-	}
-	free(string);
-	return (NULL);
-}
+// 	i = 0;
+// 	while (i < len)
+// 	{
+// 		free(string[i]);
+// 		i++;
+// 	}
+// 	free(string);
+// 	return (NULL);
+// }
 
-char	**ft_split(const char *s, char sep)
+char	**ft_split(char *s, char sep)
 {
 	char	**strs;
-	int		i;
-	int		j;
+	int		j = 0;
+	int		length = 0;
+	int		words;
 
 	if (!s)
 		return (0);
-	strs = (char **)ft_calloc(sizeof(char *), (calc_words(s, sep) + 1));
+	words = calc_words(s, sep);
+	strs = (char **)ft_calloc(sizeof(char *), words + 1);
 	if (!strs || !s)
 		return (NULL);
-	i = 0;
-	j = 0;
-	while (s[i] && j < calc_words(s, sep))
+	strs[words] = NULL;
+	while (j < words)
 	{
-		while (s[i] && s[i] == sep)
-			i++;
-		if (s[i])
-		{
-			strs[j++] = ft_charge(s, i++, sep);
-			if (!strs[j - 1])
-				return (freeini(strs, --j));
-		}
-		while (s[i] && s[i] != sep)
-			i++;
+		length = ft_wordlen(s, 0, sep);
+		// printf("string: %s---> %d------> %d\n", s, j, length);
+		strs[j] = ft_substr(s, 0, length);
+		// printf("str: (%s), the length: %d\n", strs[j],length);
+		s += length;
+		if (*s == sep)
+			s++;
+		j++;
 	}
+	// printf("this is the count: %d\n", calc_words(s, ' '));
+	// printf("idk what the fuck m doing: (%s)\n", s);
+	// printf("the len of the first word : %d\n", ft_wordlen(s, 0, ' '));
 	return (strs);
 }

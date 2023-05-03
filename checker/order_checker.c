@@ -6,7 +6,7 @@
 /*   By: bhazzout <bhazzout@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 13:45:16 by bhazzout          #+#    #+#             */
-/*   Updated: 2023/04/28 12:41:38 by bhazzout         ###   ########.fr       */
+/*   Updated: 2023/04/30 10:32:55 by bhazzout         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	op_order(int *token)
 	{
 		if (token[i] == R_APP_SIG)
 		{
-				printf("this is the token %d\n", token[i + 1]);
 			if (token[i + 1] && token[i + 1] != R_APP_FILE)
 			{
 				printf("Error, problem with APP_SIG\n");
