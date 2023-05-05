@@ -6,7 +6,7 @@
 /*   By: bhazzout <bhazzout@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 15:36:26 by bhazzout          #+#    #+#             */
-/*   Updated: 2023/05/03 14:29:58 by bhazzout         ###   ########.fr       */
+/*   Updated: 2023/05/04 15:37:34 by bhazzout         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,29 +156,29 @@ int	*array_tokens(char **cmd_array, int elements)
 
 void	get_input(char *input)
 {
-	int	len;
-	// char	**cmd_array;
-	// int	*arr;
+	int		len;
+	char	**cmd_array;
+	int		*arr;
 
 	input = readline("Minishell: ");
 	if (ft_strcmp(input, "") == 0)
 		return ;
 	len = get_length(input);
-	printf("len is : %d\n", len);
-	// check_line(input);
-	// input = fill_line(input, len);
-	// // printf("this is the line : %s\n", input);
-	// input = add_spaces(input);
-	// // printf("(%s)\n", input);
-	// cmd_array = ft_split(input, ' ');
-	// // split_print(cmd_array);
-	// arr = array_tokens(cmd_array, num_elemnts(cmd_array));
-	// op_order(arr);
-	// quote_delete(cmd_array);
-	// array_printer(arr);
+	// printf("len is : %d\n", len);
+	check_line(input);
+	input = fill_line(input, len);
+	// printf("this is the line : %s\n", input);
+	input = add_spaces(input);
+	// printf("(%s)\n", input);
+	cmd_array = ft_split(input, ' ');
+	// split_print(cmd_array);
+	arr = array_tokens(cmd_array, num_elemnts(cmd_array));
+	op_order(arr);
+	quote_delete(cmd_array);
+	array_printer(arr);
 	
-	// add_history(input);
-	// free (input);
+	add_history(input);
+	free (input);
 }
 
 int main (int ac, char **av, char **env)

@@ -6,7 +6,7 @@
 /*   By: bhazzout <bhazzout@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 10:38:19 by bhazzout          #+#    #+#             */
-/*   Updated: 2023/05/03 14:33:21 by bhazzout         ###   ########.fr       */
+/*   Updated: 2023/05/04 18:20:55 by bhazzout         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,19 +97,20 @@ int	sub_lenght(char *str, int i, char c)
 // 	return (index);
 // }
 
-void	skip_quotes(char *str, int *i)
+int skip_quotes(char *str, int i)
 {
 	char	c;
 
-	c = str[*i];
-	while (str[*i] && str[*i + 1])
+	c = str[i];
+	while ((str[i] && str[i + 1]) && (str[i] == c && str[i + 1] == c))
 	{
-		if (str[*i] == c && str[*i + 1] == c)
+		if (str[i] == c && str[i + 1] == c)
 		{
 			i++;
 		}
 		i++;
 	}
+	return (i);
 }
 
 int	no_quotes_len(char *str)
@@ -122,8 +123,8 @@ int	no_quotes_len(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == '\'' || str[i] == '"')
-			skip_quotes(str, &i);
+		// if ((str[i] == '\'' || str[i] == '"') && flag == 0)
+		// 	i = skip_quotes(str, i);
 		if (str[i] == '\'' || str[i] == '"')
 			flag = is_outside(flag, str[i]);
 		if ((str[i] == '\'' || str[i] == '"') && flag == 0)
@@ -148,16 +149,23 @@ char	*quote_processor(char *str)
 
 	i = 0;
 	length = no_quotes_len(str);
+	printf("the length is : %d\n", length);
 	cmd = malloc (length + 1);
 	while (str[i])
 	{
+		while (str[i] && str[i + 1] && ((str[i] == '\'' && str[i + 1] == '\'') || (str[i] == '"' && str[i + 1] == '"')))
+			i++;
 		if ((str[i] == '\'' || str[i] == '"') && flag == 0)
 		{
 			flag = is_outside(flag, str[i]);
 			i++;
 		}
 		if (str[i] && (str[i] == '\'' || str[i] =='"'))
+		{
 			flag = is_outside(flag, str[i]);
+			// if (str[i] == str[i + 1])
+			// 	i++;
+		}
 		if ((str[i] == '\'' || str[i] == '"') && flag == 0)
 		{
 			flag = is_outside(flag, str[i]);
@@ -168,7 +176,6 @@ char	*quote_processor(char *str)
 	}
 	cmd[j] = '\0';
 	free(str);
-	// printf("the cmd is : %s\n", cmd);
 	return (cmd);
 }
 
