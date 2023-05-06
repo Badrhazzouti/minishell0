@@ -6,7 +6,7 @@
 /*   By: bhazzout <bhazzout@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 10:38:19 by bhazzout          #+#    #+#             */
-/*   Updated: 2023/05/04 18:20:55 by bhazzout         ###   ########.fr       */
+/*   Updated: 2023/05/05 14:09:53 by bhazzout         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,96 +23,6 @@ int	sub_lenght(char *str, int i, char c)
 	return (0);
 }
 
-// char	*quote_processor(char *str)
-// {
-// 	int	i;
-// 	int	flag;
-// 	int	count;
-// 	int	j;
-
-// 	i = 0;
-// 	flag = 0;
-// 	count = 0;
-// 	while (str[i])
-// 	{
-// 		if (str[i] == '"')
-// 		{
-// 			count--;
-// 			// flag += 1;
-// 			j = i + 1;
-// 			while (str[j])
-// 			{
-// 			printf("[%c]", str[j]);
-// 				if (str[j] == '"')
-// 				{
-// 					count--;
-// 					j++;
-// 					i++;
-// 					break;
-// 				}
-// 				j++;
-// 				i++;
-// 				count++;
-// 			}
-// 		}
-// 		else if (str[i] == '\'')
-// 		{
-// 			count--;
-// 			j = i + 1;
-// 			while (str[j])
-// 			{
-// 				if (str[j] == '"')
-// 				{
-// 					count--;
-// 					break;
-// 				}
-// 				j++;
-// 				i++;
-// 				count++;
-// 			}
-// 		}
-// 		// printf("this is i : %d\n", i);
-// 		i++;
-// 		count++;
-// 	}
-// 	printf("the count is : %d\n", count);
-// 	return (str);
-// }
-
-// int	get_f_index(char *str)
-// {
-// 	int	i;
-// 	int	index = 0;
-
-// 	i = 0;
-// 	while (str[i])
-// 	{
-// 		if (str[i] == '\'' || str[i] == '"')
-// 		{
-// 			index = i;
-// 			break ;
-// 		}
-// 		i++;
-// 	}
-// 	return (index);
-// }
-
-int skip_quotes(char *str, int i)
-{
-	char	c;
-
-	c = str[i];
-	while ((str[i] && str[i + 1]) && (str[i] == c && str[i + 1] == c))
-	{
-		if (str[i] == c && str[i + 1] == c)
-		{
-			i++;
-		}
-		i++;
-	}
-	return (i);
-}
-
 int	no_quotes_len(char *str)
 {
 	int	i;
@@ -123,8 +33,6 @@ int	no_quotes_len(char *str)
 	i = 0;
 	while (str[i])
 	{
-		// if ((str[i] == '\'' || str[i] == '"') && flag == 0)
-		// 	i = skip_quotes(str, i);
 		if (str[i] == '\'' || str[i] == '"')
 			flag = is_outside(flag, str[i]);
 		if ((str[i] == '\'' || str[i] == '"') && flag == 0)
@@ -149,7 +57,7 @@ char	*quote_processor(char *str)
 
 	i = 0;
 	length = no_quotes_len(str);
-	printf("the length is : %d\n", length);
+	// printf("the length is : %d\n", length);
 	cmd = malloc (length + 1);
 	while (str[i])
 	{
@@ -182,13 +90,13 @@ char	*quote_processor(char *str)
 char	**quote_delete(char **cmd)
 {
 	int		i;
-	char	*str;
+	// char	*str;
 
 	i = 0;
 	while (cmd[i])
 	{
-		str = quote_processor(cmd[i]);
-		printf("This is the str: (%s)\n", str);
+		cmd[i] = quote_processor(cmd[i]);
+		// printf("This is the str: (%s)\n", str);
 		i++;
 	}
 	return (cmd);

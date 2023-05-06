@@ -6,7 +6,7 @@
 /*   By: bhazzout <bhazzout@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 23:53:47 by bhazzout          #+#    #+#             */
-/*   Updated: 2023/04/13 20:30:40 by bhazzout         ###   ########.fr       */
+/*   Updated: 2023/05/05 18:18:09 by bhazzout         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*get_env_name(char *env)
 		i++;
 	}
 	name[i] = '\0';
-	return(name);
+	return (name);
 }
 
 char	*get_env_value(char *env)

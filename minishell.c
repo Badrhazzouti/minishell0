@@ -6,7 +6,7 @@
 /*   By: bhazzout <bhazzout@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 15:36:26 by bhazzout          #+#    #+#             */
-/*   Updated: 2023/05/04 15:37:34 by bhazzout         ###   ########.fr       */
+/*   Updated: 2023/05/05 18:19:56 by bhazzout         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,7 @@ int	*array_tokens(char **cmd_array, int elements)
 	return (cmd_token);
 }
 
-void	get_input(char *input)
+void	get_input(char *input, char **env)
 {
 	int		len;
 	char	**cmd_array;
@@ -169,13 +169,15 @@ void	get_input(char *input)
 	input = fill_line(input, len);
 	// printf("this is the line : %s\n", input);
 	input = add_spaces(input);
-	// printf("(%s)\n", input);
 	cmd_array = ft_split(input, ' ');
 	// split_print(cmd_array);
 	arr = array_tokens(cmd_array, num_elemnts(cmd_array));
 	op_order(arr);
-	quote_delete(cmd_array);
-	array_printer(arr);
+	cmd_array = quote_delete(cmd_array);
+	// printf("======================\n");
+	expander(cmd_array, env);
+	// split_print(cmd_array);
+	// array_printer(arr);
 	
 	add_history(input);
 	free (input);
@@ -190,7 +192,7 @@ int main (int ac, char **av, char **env)
 	(void)  env;
 	while (1)
 	{
-		get_input(&input);
+		get_input(&input, env);
 	}
 	get_env(env);
 }

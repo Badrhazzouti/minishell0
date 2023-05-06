@@ -6,7 +6,7 @@
 /*   By: bhazzout <bhazzout@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 15:36:24 by bhazzout          #+#    #+#             */
-/*   Updated: 2023/05/02 13:39:13 by bhazzout         ###   ########.fr       */
+/*   Updated: 2023/05/05 18:38:44 by bhazzout         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,7 @@ int		check_outside(int count);
 void	op_order(int *token);
 int		is_outside(int flag, char c);
 char	**quote_delete(char **cmd);
+void	expander(char **cmd, char **env);
+int		ft_envcmp(char *s1, char *s2, int length);
 
 #endif
