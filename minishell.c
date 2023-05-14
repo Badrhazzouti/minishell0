@@ -6,7 +6,7 @@
 /*   By: bhazzout <bhazzout@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 15:36:26 by bhazzout          #+#    #+#             */
-/*   Updated: 2023/05/05 18:19:56 by bhazzout         ###   ########.fr       */
+/*   Updated: 2023/05/14 11:05:38 by bhazzout         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,7 @@ void	get_input(char *input, char **env)
 	int		len;
 	char	**cmd_array;
 	int		*arr;
+	(void) env;
 
 	input = readline("Minishell: ");
 	if (ft_strcmp(input, "") == 0)
@@ -170,14 +171,14 @@ void	get_input(char *input, char **env)
 	// printf("this is the line : %s\n", input);
 	input = add_spaces(input);
 	cmd_array = ft_split(input, ' ');
-	// split_print(cmd_array);
+	split_print(cmd_array);
 	arr = array_tokens(cmd_array, num_elemnts(cmd_array));
 	op_order(arr);
 	cmd_array = quote_delete(cmd_array);
 	// printf("======================\n");
-	expander(cmd_array, env);
-	// split_print(cmd_array);
-	// array_printer(arr);
+	// expander(cmd_array, env);
+	split_print(cmd_array);
+	array_printer(arr);
 	
 	add_history(input);
 	free (input);
