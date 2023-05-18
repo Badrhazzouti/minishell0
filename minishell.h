@@ -6,7 +6,7 @@
 /*   By: bhazzout <bhazzout@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 15:36:24 by bhazzout          #+#    #+#             */
-/*   Updated: 2023/05/05 18:38:44 by bhazzout         ###   ########.fr       */
+/*   Updated: 2023/05/17 16:23:08 by bhazzout         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 # include <stdio.h>
+# include <string.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <readline/readline.h>
@@ -24,7 +25,28 @@ typedef struct t_env
 	char			*env_name;
 	char			*env_value;
 	struct t_env	*next;
-} t_env;
+} 					t_env;
+
+typedef struct s_filetype
+{
+	int				fd;
+	char			*red;
+    char            *type;
+    char            *file_name;
+}                    t_filetype;
+
+typedef struct s_cmds
+{
+    char            *cmd_name;
+    char            **option;
+    t_filetype        files;
+}                    t_cmds;
+
+typedef struct s_list1
+{
+   	void			*content;
+    struct s_list1    *next;
+}                    t_list;
 
 typedef enum t_enum
 {
@@ -72,5 +94,9 @@ int		is_outside(int flag, char c);
 char	**quote_delete(char **cmd);
 void	expander(char **cmd, char **env);
 int		ft_envcmp(char *s1, char *s2, int length);
+t_list	**list_cmds(char **cmd_array, int *arr);
+t_list	*my_lstnew(void *content);
+void	my_lstadd_back(t_list **lst, t_list *new);
+void	split_print(char **input);
 
 #endif
