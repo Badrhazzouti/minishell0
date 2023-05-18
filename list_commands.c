@@ -6,7 +6,7 @@
 /*   By: bhazzout <bhazzout@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 14:46:29 by bhazzout          #+#    #+#             */
-/*   Updated: 2023/05/18 14:28:06 by bhazzout         ###   ########.fr       */
+/*   Updated: 2023/05/18 17:46:44 by bhazzout         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,10 @@ void	print_list(t_list *list)
 		printf("The red is : %s\n", node->files.red);
 		printf("The file_name is : %s\n", node->files.file_name);
         printf("the command name is: %s\n", node->cmd_name);
-
+		// if (node->files.fd < 0)
+		// 		printf("Can not create fd.\n");
+		// else
+			printf("the fd is: %d\n", node->files.fd);
 		
 		for(int i = 0;(node->option) && (node->option)[i] ; i++)
 		{
@@ -82,14 +85,15 @@ t_cmds	*fill_node(char **cmd_array, int *arr, int i)
 			}
 			if (count > 0)
 			{
-			node->option = malloc ((count + 1) * sizeof(char *));
-			node->option[count] = NULL;
-			while (index < count)
-			{
-				node->option[index] = ft_strdup(cmd_array[j]);
-				index++;
-				j--;
-			}}
+				node->option = malloc ((count + 1) * sizeof(char *));
+				node->option[count] = NULL;
+				while (index < count)
+				{
+					node->option[index] = ft_strdup(cmd_array[j]);
+					index++;
+					j--;
+				}
+			}
 		}
 		else if (arr[i] == R_IN_SIG)
 			node->files.red = ft_strdup(cmd_array[i]);
@@ -99,6 +103,7 @@ t_cmds	*fill_node(char **cmd_array, int *arr, int i)
 		{
 			node->files.type = ft_strdup("Output");
 			node->files.file_name = ft_strdup(cmd_array[i]);
+			node->files.fd = open(node->files.file_name, O_CREAT, O_RDWR);
 		}
 		else if (arr[i] == R_APP_SIG)
 			node->files.red = ft_strdup(cmd_array[i]);
@@ -106,11 +111,13 @@ t_cmds	*fill_node(char **cmd_array, int *arr, int i)
 		{
 			node->files.type = ft_strdup("APP_file");
 			node->files.file_name = ft_strdup(cmd_array[i]);
+			node->files.fd = open(node->files.file_name, O_CREAT, O_RDWR);
 		}
 		else if (arr[i] == R_IN_FILE)
 		{
 			node->files.type = ft_strdup("Input");
 			node->files.file_name = ft_strdup(cmd_array[i]);
+			node->files.fd = open(node->files.file_name, O_CREAT, O_RDONLY);
 		}
 		else if (arr[i] == HEREDOC_SIG)
 			node->files.red = ft_strdup(cmd_array[i]);
@@ -118,8 +125,9 @@ t_cmds	*fill_node(char **cmd_array, int *arr, int i)
 		{
 			node->files.type = ft_strdup("HEREDOC_file");
 			node->files.file_name = ft_strdup(cmd_array[i]);
-		}
-		i--;
+			node->files.fd = open(node->files.file_name, O_CREAT, O_RDWR);
+
+		}		i--;
 	}
 	return (node);
 }
@@ -141,7 +149,13 @@ t_list	**list_cmds(char **cmd_array, int *arr)
 			node = NULL;
 		}
 		i++;
+		if (arr[i] == '\0')
+		{
+			node = fill_node(cmd_array, arr, (i - 1));
+			my_lstadd_back(&list, my_lstnew(node));
+			node = NULL;
+		}
 	}
-	print_list(list);
+	// print_list(list);
 	return (NULL);
 }
