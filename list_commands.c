@@ -6,7 +6,7 @@
 /*   By: bhazzout <bhazzout@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 14:46:29 by bhazzout          #+#    #+#             */
-/*   Updated: 2023/05/17 19:06:19 by bhazzout         ###   ########.fr       */
+/*   Updated: 2023/05/18 14:28:06 by bhazzout         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,18 @@ void	print_list(t_list *list)
     while (tmp)
     {
     	t_cmds *node = (t_cmds *)tmp->content;
-        printf("the command name is: %s\n", node->cmd_name);
 		// split_print(node->option);
+		printf("The type is : %s\n", node->files.type);
 		printf("The red is : %s\n", node->files.red);
+		printf("The file_name is : %s\n", node->files.file_name);
+        printf("the command name is: %s\n", node->cmd_name);
+
+		
+		for(int i = 0;(node->option) && (node->option)[i] ; i++)
+		{
+			printf("The option is : %s\n", (node->option)[i]);
+		}
+		printf("==================\n");
         tmp = tmp->next;
     }
 }
@@ -47,6 +56,10 @@ t_cmds	*fill_node(char **cmd_array, int *arr, int i)
 	t_cmds	*node;
 	count = 0;
 	node = malloc (sizeof (t_cmds));
+	node->files.red =NULL;
+	node->files.type =NULL;
+	node->files.file_name =NULL;
+	node->option =NULL;
 	while (i >= 0 && arr[i] != PIPE)
 	{
 		if (arr[i] == CMD_NAME)
@@ -67,6 +80,8 @@ t_cmds	*fill_node(char **cmd_array, int *arr, int i)
 					break ;
 				}
 			}
+			if (count > 0)
+			{
 			node->option = malloc ((count + 1) * sizeof(char *));
 			node->option[count] = NULL;
 			while (index < count)
@@ -74,7 +89,7 @@ t_cmds	*fill_node(char **cmd_array, int *arr, int i)
 				node->option[index] = ft_strdup(cmd_array[j]);
 				index++;
 				j--;
-			}
+			}}
 		}
 		else if (arr[i] == R_IN_SIG)
 			node->files.red = ft_strdup(cmd_array[i]);
@@ -116,6 +131,7 @@ t_list	**list_cmds(char **cmd_array, int *arr)
 	t_cmds	*node = NULL;
 
 	i = 0;
+	// list = malloc (sizeof(t_list));
 	while (arr[i])
 	{
 		if (arr[i] == PIPE)
