@@ -6,7 +6,7 @@
 /*   By: bhazzout <bhazzout@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 00:27:03 by bhazzout          #+#    #+#             */
-/*   Updated: 2023/05/01 16:16:44 by bhazzout         ###   ########.fr       */
+/*   Updated: 2023/05/19 21:08:18 by bhazzout         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,12 +112,12 @@ char	*add_spaces(char *input)
 		{
 			if (space_before(input, i) == 0)
 				input = add_space_before(input, i);
-			if ((input[i] == '>' && input[i + 1] == '>') || (input[i] == '<' && input[i + 1] == '<'))
+			if ((input[i] == '>' && input[i + 1] == '>') || (input[i] == '<' && input[i + 1] == '<') || (input[i] == '<' && input[i + 1] == '>'))
 				i++;
 		}
 		i++;
 	}
-	// printf("String before: %s\n", input);
+	// printf("String before: (%s)\n", input);
 	i = 0;
 	while (input[i])
 	{
@@ -127,14 +127,14 @@ char	*add_spaces(char *input)
 		}
 		if ((input[i] == '|' || input[i] == '<' || input[i] == '>') && flag == 0)
 		{
-			if ((input[i] == '>' && input[i + 1] == '>') || (input[i] == '<' && input[i + 1] == '<'))
+			if ((input[i] == '>' && input[i + 1] == '>') || (input[i] == '<' && input[i + 1] == '<') || (input[i] == '<' && input[i + 1] == '>'))
 				i++;
 			if (space_after(input, i) == 0)
 				input = add_space_after(input, i);
 		}
 		i++;
 	}
-	// printf("String after: %s\n", input);
+	// printf("String after: (%s)\n", input);
 	return (input);
 }
 

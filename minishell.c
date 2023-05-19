@@ -6,7 +6,7 @@
 /*   By: bhazzout <bhazzout@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 15:36:26 by bhazzout          #+#    #+#             */
-/*   Updated: 2023/05/17 16:55:32 by bhazzout         ###   ########.fr       */
+/*   Updated: 2023/05/19 22:04:12 by bhazzout         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,6 @@ int	*array_tokens(char **cmd_array, int elements)
 	int	*cmd_token;
 	int	i;
 
-	// printf("this is the elements : %d\n", elements);
 	cmd_token = ft_calloc(sizeof (int) , elements + 1);
 	if (!cmd_token)
 		return (NULL);
@@ -114,6 +113,8 @@ int	*array_tokens(char **cmd_array, int elements)
 	{
 		if (ft_strcmp(cmd_array[i], "|") == 0)
 			cmd_token[i] = PIPE;
+		else if (cmd_array[i + 1] && (ft_strcmp(cmd_array[i], "<>") == 0))
+			cmd_token[i] = R_IN_OUT;
 		else if (ft_strcmp(cmd_array[i], "<") == 0)
 			cmd_token[i] = R_IN_SIG;
 		else if (ft_strcmp(cmd_array[i], ">") == 0)
@@ -146,11 +147,13 @@ void	get_input(char *input, char **env)
 {
 	int		len;
 	char	**cmd_array;
-	t_list	**commands;
+	t_list	*commands;
+	char	*history;
 	int		*arr;
 	(void) env;
 
 	input = readline("Minishell: ");
+	history = input;
 	if (ft_strcmp(input, "") == 0)
 		return ;
 	len = get_length(input);
@@ -162,14 +165,12 @@ void	get_input(char *input, char **env)
 	cmd_array = ft_split(input, ' ');
 	// split_print(cmd_array);
 	arr = array_tokens(cmd_array, num_elemnts(cmd_array));
-	op_order(arr);
+	if (op_order(arr))
+		return ;
 	cmd_array = quote_delete(cmd_array);
-	// expander(cmd_array, env);
-	// split_print(cmd_array);
-	// printf("======================\n");
-	// array_printer(arr);
 	commands = list_cmds(cmd_array, arr);
-	add_history(input);
+	print_list(commands);
+	add_history(history);
 	free (input);
 }
 

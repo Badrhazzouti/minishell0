@@ -6,7 +6,7 @@
 /*   By: bhazzout <bhazzout@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 09:13:39 by bhazzout          #+#    #+#             */
-/*   Updated: 2023/04/27 09:14:54 by bhazzout         ###   ########.fr       */
+/*   Updated: 2023/05/19 20:12:29 by bhazzout         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,10 @@
 int check_pipe(char *input)
 {
 	int i;
+	int	flag;
 
 	i = 0;
+	flag = 0;
 	if (input[i] == '|')
 	{
 		printf("Error, command line starts with a |.\n");
@@ -24,7 +26,9 @@ int check_pipe(char *input)
 	}
 	while (input[i] && input[i + 1])
 	{
-		if (input[i] == '|' && input[i + 1] == '|')
+		if (input[i] == '\'' || input[i] == '"')
+			flag = is_outside(flag, input[i]);
+		if ((input[i] == '|' && input[i + 1] == '|') && flag == 0)
 		{
 			printf("Error, double pipe.\n");
 			return (1);

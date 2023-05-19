@@ -6,7 +6,7 @@
 /*   By: bhazzout <bhazzout@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 15:36:24 by bhazzout          #+#    #+#             */
-/*   Updated: 2023/05/18 15:44:52 by bhazzout         ###   ########.fr       */
+/*   Updated: 2023/05/19 21:40:51 by bhazzout         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef struct t_env
 
 typedef struct s_filetype
 {
-	int				fd;
+	// int				fd;
 	char			*red;
     char            *type;
     char            *file_name;
@@ -64,6 +64,7 @@ typedef enum t_enum
 	HEREDOC_SIG,
 	HEREDOC_LIM,
 	EMPTY,
+	R_IN_OUT,
 } t_enum;
 
 char	*ft_strchr(const char *s, int c);
@@ -91,14 +92,16 @@ int 	check_line(char *input);
 char	*skip_spaces(char *input);
 int		check_quotes(char *input);
 int		check_outside(int count);
-void	op_order(int *token);
+int		op_order(int *token);
 int		is_outside(int flag, char c);
 char	**quote_delete(char **cmd);
 void	expander(char **cmd, char **env);
 int		ft_envcmp(char *s1, char *s2, int length);
-t_list	**list_cmds(char **cmd_array, int *arr);
+// t_list	**list_cmds(char **cmd_array, int *arr);
 t_list	*my_lstnew(void *content);
 void	my_lstadd_back(t_list **lst, t_list *new);
 void	split_print(char **input);
+void	print_list(t_list *list);
+t_list	*list_cmds(char **cmd_array, int *arr);
 
 #endif
